@@ -1,0 +1,63 @@
+testsuiteNoClear "Parameter tests"
+testcaseNoClear "Parametric"
+--
+--  11 Total tests going to statistics 
+-- 2 intentional failures
+--
+-- Simple test
+-- First without parameters
+--
+p1_1 :FDA := (1+x*y)*(z+y*x);
+factorCheck_poly(p1_1)
+--
+-- Then with parameters
+--
+p1_1p :FDA := (a+b*x*y)*(c*z+e*y*x);
+factorCheck_poly(p1_1p)
+-- Which seems to work
+--
+-- Make sure it can fail
+--
+p1_1pa :FDA := (a+x*y)*(c*z+e*y*x);
+-- Incorrect factors for p1_1
+p1_1pa_f:List(FDA) := factor(p1_1pa)::List(XDP);
+-- Correct factors for p1_1p
+p1_1p_f :List(FDA) := factor(p1_1p)::List(XDP);
+-- 
+-- Now we cross check
+-- Passes
+f_factorCheck(p1_1p,p1_1p_f)
+f_factorCheck(p1_1pa,p1_1pa_f)
+-- Fails
+xf_factorCheck(p1_1pa,p1_1p_f)
+xf_factorCheck(p1_1p,p1_1pa_f)
+--
+--  Harder problems
+--
+p2:FDA :=x^2-a^2;
+factorCheck_poly(p2)
+p2a:FDA:=x^2-a;
+factorCheck_poly(p2a)
+--
+p3:FDA:=x^5-a^5;
+factorCheck_poly(p3)
+p3a:FDA := x^5-a;
+factorCheck_poly(p3a)
+--
+-- More amusingly
+--
+p4:FDA:=x^4-a^4;
+factorCheck_poly(p4)
+--
+-- More impressive
+--
+p5:FDA := (x^6-a^6)*(x^6+a^6);
+factorCheck_poly(p5)
+--
+-- Be nice if this worked x^12-a^12 but 
+-- takes a long time ??
+-- p6:FDA := x^12-a^12
+
+
+
+

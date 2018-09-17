@@ -1,0 +1,22 @@
+-- Initialization for FDALG
+-- Changed: Mit 2018-08-15 19:56
+-- Changed: Sam 2018-09-01 20:45
+
+)compile linpen.spad
+)compile fdalg.spad
+
+ALPHABET := ['x, 'y, 'z];
+OVL ==> OrderedVariableList(ALPHABET)
+OFM ==> FreeMonoid(OVL)
+K ==> Fraction(Integer)
+XDP ==> XDPOLY(OVL, K)
+FDA ==> FDALG(OVL, K)
+x := 'x::OFM;
+y := 'y::OFM;
+z := 'z::OFM;
+OF ==> OutputForm
+
+DOn ==> enableDebugOutput
+DOff ==> disableDebugOutput
+AOn ==> enableAlternativeOutput
+AOff ==> disableAlternativeOutput

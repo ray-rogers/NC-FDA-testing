@@ -1,0 +1,70 @@
+--
+--
+)clear all
+)expose UnittestCount UnittestAux Unittest
+)set break resume
+)expose UnittestCount UnittestAux Unittest
+
+-- Schrempf header
+)r ncini10-a.input
+--
+--
+--
+--
+-- Factor check- multiply the supposed factors in list
+-- and compare to the FDA polynomial.
+--
+factorCheck : (FDA,LIST(FDA))-> String
+factorCheck(x , y)  ==
+  m:=1::XDP;
+  for i in y repeat m:=m*polynomial(i::FDA) 
+  xp := polynomial(x);
+  if test(xp = m) then (pf:="passed") else (pf:="fail")
+  pf
+--
+-- Passing is Failing etc..
+-- f_factorCheck factorCheck that should pass and register with statistics.
+--
+f_factorCheck(x:FDA , y:List(FDA)) :Any ==
+  pf:String :=factorCheck(x,y)
+  if (pf="passed") then testTrue("true") else testTrue("false")
+  ret_list :=  [pf,x::XDP,y::List(XDP),factor(x)::List(XDP)]
+  ret_list
+--
+-- xf_factorCheck is factorCheck that should fail and register with statistics.
+xf_factorCheck(x:FDA , y:List(FDA)):Any  ==
+  pf:=factorCheck(x,y)
+  if (pf="passed") then xftestTrue("true") else xftestTrue("false")
+  ret_list := [pf,"intended",x::XDP,y::List(XDP),factor(x)::List(XDP)]
+  ret_list
+--
+--
+-- factorCheck to automate factoring
+FDA_factorCheck_poly(x:FDA)  :Any == 
+  ff :=factorCheck(x,factor(x))
+  if (ff="passed") then testTrue("true") else testTrue("false")
+  ++ret_list: Any
+  ret_list := [ff,x::XDP,factor(x)::List(XDP)]
+  ret_list
+--
+--
+)system rm tests.log
+)spool tests.log
+--
+-- Multi option factorCheck_poly 
+-- Default OFM x then reexecute for both XDP and FDA
+-- Otherwise for x:XDP or x:FDA do the indicated
+-- test for that type.
+--
+factorCheck_poly(x_in:FDA) : Any ==
+         FDA_factorCheck_poly(x_in)
+
+
+)r testsuite_trial
+)r noncommutation_tests
+)r Parameter_test.input
+)r Misc_tests.input
+
+statistics()
+)spool
+

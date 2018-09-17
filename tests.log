@@ -1,0 +1,816 @@
+
+--
+-- Multi option factorCheck_poly 
+-- Default OFM x then reexecute for both XDP and FDA
+-- Otherwise for x:XDP or x:FDA do the indicated
+-- test for that type.
+--
+factorCheck_poly(x_in:FDA) : Any ==
+         FDA_factorCheck_poly(x_in)
+ 
+   Function declaration factorCheck_poly : FreeDivisionAlgebra(
+      OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b
+      ,c,d,e],Integer))) -> Any has been added to workspace.
+                                                                   Type: Void
+
+
+)r testsuite_trial
+ 
+--
+--
+testsuiteNoClear "testsuite_trial"
+ 
+                                                                   Type: Void
+testcaseNoClear "Sanity 1"
+ 
+                                                                   Type: Void
+--
+--
+-- Sample cases
+x1:FDA := x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x1)
+ 
+   Compiling function factorCheck with type (FreeDivisionAlgebra(
+      OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b
+      ,c,d,e],Integer))), List(FreeDivisionAlgebra(OrderedVariableList(
+      [x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))))
+       -> String 
+   Compiling function FDA_factorCheck_poly with type 
+      FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(
+      MultivariatePolynomial([a,b,c,d,e],Integer))) -> Any 
+   Compiling function factorCheck_poly with type FreeDivisionAlgebra(
+      OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b
+      ,c,d,e],Integer))) -> Any 
+
+   (31)  ["passed", x, [x]]
+                                                              Type: List(Any)
+x2:FDA := x*y;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x2)
+ 
+
+   (33)  ["passed", x y, [x, y]]
+                                                              Type: List(Any)
+factorCheck_poly((x+x*y*x)^2 * (z*y));
+ 
+
+                                                              Type: List(Any)
+statistics()
+ 
+   =============================================================================
+   General WARNINGS:
+   * do not use ')clear completely' before having used 'statistics()'
+     It clears the statistics without warning!
+   * do not forget to pass the arguments of the testXxxx functions as Strings!
+     Otherwise, the test will fail and statistics() will not notice!
+   * testLibraryError does not prevent FriCAS from aborting the current block.
+     Thus, if a block contains other test functions, they will not be executed
+     and statistics() will not notice!
+
+   =============================================================================
+   Testsuite: testsuite_trial
+     failed (total): 0 (1)
+
+   =============================================================================
+   testsuite | testcases: failed (total) | tests: failed (total)
+   testsuite_trial             0     (1)               0     (3)
+   =============================================================================
+   File summary.
+   unexpected failures: 0
+   expected failures: 0
+   unexpected passes: 0
+   total tests: 3
+                                                                   Type: Void
+
+--
+--
+testcaseNoClear "Sanity 2"
+ 
+                                                                   Type: Void
+--
+x3:FDA := 1 - 1*y*x - x*y + x*y^2*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x3)
+ 
+
+                                       2
+   (38)  ["passed", 1 - y x - x y + x y x, [- 1 + x y, - 1 + y x]]
+                                                              Type: List(Any)
+x4:FDA := 3*x - 2*x*y*x - x*y*x*y*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly( x4)
+ 
+
+   (40)  ["passed", 3 x - 2 x y x - x y x y x, [x, 3 + y x, 1 - y x]]
+                                                              Type: List(Any)
+x5:FDA := 9 - 9*x*y - x*y*x*y + x*y*x*y*x*y;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly( x5)
+ 
+
+   (42)
+   ["passed", 9 - 9 x y - x y x y + x y x y x y,
+    [3 + x y, - 3 + x y, - 1 + x y]]
+                                                              Type: List(Any)
+x6:FDA := 1 - x*y*z*y*x*z;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly( x6)
+ 
+
+   (44)  ["passed", 1 - x y z y x z, [1 - x y z y x z]]
+                                                              Type: List(Any)
+)r noncommutation_tests
+ 
+testsuiteNoClear "NonC testing"
+ 
+                                                                   Type: Void
+testcaseNoClear "NonCommutation testing"
+ 
+                                                                   Type: Void
+--
+--
+-- x*y=[x,y] Should Pass
+--
+f_factorCheck(x*y,[x,y])
+ 
+   Compiling function f_factorCheck with type (FreeDivisionAlgebra(
+      OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b
+      ,c,d,e],Integer))), List(FreeDivisionAlgebra(OrderedVariableList(
+      [x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))))
+       -> Any 
+
+   (47)  ["passed", x y, [x, y], [x, y]]
+                                                              Type: List(Any)
+f_factorCheck(y*x,[y,x])
+ 
+
+   (48)  ["passed", y x, [y, x], [y, x]]
+                                                              Type: List(Any)
+--
+-- x*y=[y,x]  Should fail
+--
+xf_factorCheck(x*y,[y,x])
+ 
+   Compiling function xf_factorCheck with type (FreeDivisionAlgebra(
+      OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b
+      ,c,d,e],Integer))), List(FreeDivisionAlgebra(OrderedVariableList(
+      [x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))))
+       -> Any 
+
+   (49)  ["fail", "intended", x y, [y, x], [x, y]]
+                                                              Type: List(Any)
+xf_factorCheck(y*x,[x,y])
+ 
+
+   (50)  ["fail", "intended", y x, [x, y], [y, x]]
+                                                              Type: List(Any)
+--
+-- (x+x*y*x)=x*(1+y*x)=(1+x*y)*x These should pass
+--
+f_factorCheck(x+x*y*x,[x,(1+y*x)])
+ 
+
+   (51)  ["passed", x + x y x, [x, 1 + y x], [x, 1 + y x]]
+                                                              Type: List(Any)
+f_factorCheck(x+x*y*x,[1+x*y,x])
+ 
+
+   (52)  ["passed", x + x y x, [1 + x y, x], [x, 1 + y x]]
+                                                              Type: List(Any)
+--
+-- This should fail
+xf_factorCheck(x^2-y^2,[x+y,x-y])
+ 
+
+                                 2    2                        2    2
+   (53)  ["fail", "intended", - y  + x , [y + x, - y + x], [- y  + x ]]
+                                                              Type: List(Any)
+-- This should pass
+f_factorCheck(x^2-y^2-x*y+y*x,[x+y,x-y])
+ 
+
+                       2                2
+   (54)  ["passed", - y  + y x - x y + x , [y + x, - y + x], [y + x, - y + x]]
+                                                              Type: List(Any)
+)r Parameter_test.input
+ 
+testsuiteNoClear "Parameter tests"
+ 
+                                                                   Type: Void
+testcaseNoClear "Parametric"
+ 
+                                                                   Type: Void
+--
+--  11 Total tests going to statistics 
+-- 2 intentional failures
+--
+-- Simple test
+-- First without parameters
+--
+p1_1 :FDA := (1+x*y)*(z+y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p1_1)
+ 
+
+                                         2
+   (58)  ["passed", z + y x + x y z + x y x, [1 + x y, z + y x]]
+                                                              Type: List(Any)
+--
+-- Then with parameters
+--
+p1_1p :FDA := (a+b*x*y)*(c*z+e*y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p1_1p)
+ 
+
+   (60)
+                                                   2
+   ["passed", c a z + e a y x + c b x y z + e b x y x, [a + b x y, c z + e y x]]
+                                                              Type: List(Any)
+-- Which seems to work
+--
+-- Make sure it can fail
+--
+p1_1pa :FDA := (a+x*y)*(c*z+e*y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+-- Incorrect factors for p1_1
+p1_1pa_f:List(FDA) := factor(p1_1pa)::List(XDP);
+ 
+
+Type: List(FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer))))
+-- Correct factors for p1_1p
+p1_1p_f :List(FDA) := factor(p1_1p)::List(XDP);
+ 
+
+Type: List(FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer))))
+-- 
+-- Now we cross check
+-- Passes
+f_factorCheck(p1_1p,p1_1p_f)
+ 
+
+   (64)
+                                                   2
+   ["passed", c a z + e a y x + c b x y z + e b x y x,
+    [a + b x y, c z + e y x], [a + b x y, c z + e y x]]
+                                                              Type: List(Any)
+f_factorCheck(p1_1pa,p1_1pa_f)
+ 
+
+   (65)
+                                               2
+   ["passed", c a z + e a y x + c x y z + e x y x, [a + x y, c z + e y x],
+    [a + x y, c z + e y x]]
+                                                              Type: List(Any)
+-- Fails
+xf_factorCheck(p1_1pa,p1_1p_f)
+ 
+
+   (66)
+                                                         2
+   ["fail", "intended", c a z + e a y x + c x y z + e x y x,
+    [a + b x y, c z + e y x], [a + x y, c z + e y x]]
+                                                              Type: List(Any)
+xf_factorCheck(p1_1p,p1_1pa_f)
+ 
+
+   (67)
+                                                             2
+   ["fail", "intended", c a z + e a y x + c b x y z + e b x y x,
+    [a + x y, c z + e y x], [a + b x y, c z + e y x]]
+                                                              Type: List(Any)
+--
+--  Harder problems
+--
+p2:FDA :=x^2-a^2;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p2)
+ 
+
+                       2    2
+   (69)  ["passed", - a  + x , [a + x, - a + x]]
+                                                              Type: List(Any)
+p2a:FDA:=x^2-a;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p2a)
+ 
+
+                           2          2
+   (71)  ["passed", - a + x , [- a + x ]]
+                                                              Type: List(Any)
+--
+p3:FDA:=x^5-a^5;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p3)
+ 
+
+                       5    5             4    3     2 2      3    4
+   (73)  ["passed", - a  + x , [- a + x, a  + a x + a x  + a x  + x ]]
+                                                              Type: List(Any)
+p3a:FDA := x^5-a;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p3a)
+ 
+
+                           5          5
+   (75)  ["passed", - a + x , [- a + x ]]
+                                                              Type: List(Any)
+--
+-- More amusingly
+--
+p4:FDA:=x^4-a^4;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p4)
+ 
+
+                       4    4                    2    2
+   (77)  ["passed", - a  + x , [- a + x, a + x, a  + x ]]
+                                                              Type: List(Any)
+--
+-- More impressive
+--
+p5:FDA := (x^6-a^6)*(x^6+a^6);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p5)
+ 
+
+   (79)
+                 12    12
+   ["passed", - a   + x  ,
+                      2          2   2          2   2    2   4    2 2    4
+    [- a + x, a + x, a  + a x + x , a  - a x + x , a  + x , a  - a x  + x ]]
+                                                              Type: List(Any)
+)r Misc_tests.input
+ 
+testsuiteNoClear "Misc"
+ 
+                                                                   Type: Void
+testcaseNoClear "Bill Page examples"
+ 
+                                                                   Type: Void
+--
+-- This file is for testing various examples (bugs?) not any particular 
+-- Functionality
+--
+-- Bill Page 7/12/2018
+--
+-- Label/number continuing from testsuite_trial.input
+--
+-- This is just a polymorphic check
+-- Probably wrong
+-- Should return x7 (below) and
+-- "XDP" right now
+p_morp:FDA :=(1+x*y)*x*(1+z*y)*(x*y*z-z*x*y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(p_morp)
+ 
+
+   (83)
+   ["passed",
+
+                    2                                                     2
+       - x z x y + x y z - x z y z x y + x z y x y z - x y x z x y + x y x y z
+     + 
+       - x y x z y z x y + x y x z y x y z
+     ,
+    [x, 1 + y x, 1 + z y, - z x y + x y z]]
+                                                              Type: List(Any)
+--
+-- Back to work
+--
+x7:FDA := (1+x*y)*x*(1+z*y)*(x*y*z-z*x*y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x7)
+ 
+
+   (85)
+   ["passed",
+
+                    2                                                     2
+       - x z x y + x y z - x z y z x y + x z y x y z - x y x z x y + x y x y z
+     + 
+       - x y x z y z x y + x y x z y x y z
+     ,
+    [x, 1 + y x, 1 + z y, - z x y + x y z]]
+                                                              Type: List(Any)
+x8:FDA :=(3*x*y+5*y*x)^2  ;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x8)
+ 
+
+   (87)
+                                 2          2
+   ["passed", 25 y x y x + 15 y x y + 15 x y x + 9 x y x y,
+    [5 y x + 3 x y, 5 y x + 3 x y]]
+                                                              Type: List(Any)
+-- This takes a little longer
+x9:FDA :=(3*x*y+5*y*x)^3  ;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x9)
+ 
+
+   (89)
+   ["passed",
+
+                                   2          2 2          2              2
+       125 y x y x y x + 75 y x y x y + 75 y x y x + 45 y x y x y + 75 x y x y x
+     + 
+             2 2              2
+       45 x y x y + 45 x y x y x + 27 x y x y x y
+     ,
+    [5 y x + 3 x y, 5 y x + 3 x y, 5 y x + 3 x y]]
+                                                              Type: List(Any)
+--
+-- Some tests from Bill Pages upload at git Hub
+-- Originally targeted towards Konrad SChrempf algorithm
+-- File polynomialfactor.input
+--
+x10:FDA := (1-x)*(1-y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x10)
+ 
+
+   (91)  ["passed", 1 - y - x + x y, [1 - x, 1 - y]]
+                                                              Type: List(Any)
+x11:FDA :=1-x*y;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x11)
+ 
+
+   (93)  ["passed", 1 - x y, [1 - x y]]
+                                                              Type: List(Any)
+x12:FDA :=y*y -9; 
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x12)
+ 
+
+                           2
+   (95)  ["passed", - 9 + y , [3 + y, - 3 + y]]
+                                                              Type: List(Any)
+x13:FDA :=x*x-2;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x13)
+ 
+
+                           2          2
+   (97)  ["passed", - 2 + x , [- 2 + x ]]
+                                                              Type: List(Any)
+x14:FDA :=4*x*x-9;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x14)
+ 
+
+                             2              3
+   (99)  ["passed", - 9 + 4 x , [6 + 4 x, - - + x]]
+                                            2
+                                                              Type: List(Any)
+x15:FDA :=x*y-y*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x15)
+ 
+
+   (101)  ["passed", - y x + x y, [- y x + x y]]
+                                                              Type: List(Any)
+x16:FDA :=x*y+y*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x16)
+ 
+
+   (103)  ["passed", y x + x y, [y x + x y]]
+                                                              Type: List(Any)
+x17:FDA := x*y*z-3*x*y+x*z+2*y*z-3*x-6*y+2*z-6;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x17)
+ 
+
+   (105)
+   ["passed", - 6 + 2 z - 6 y - 3 x + 2 y z + x z - 3 x y + x y z,
+            1   1
+    [2 + x, - + - y, - 6 + 2 z]]
+            2   2
+                                                              Type: List(Any)
+x18:FDA :=(y+1)*(x+2)*(x-2);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x18)
+ 
+
+                                  2      2
+   (107)  ["passed", - 4 - 4 y + x  + y x , [1 + y, 2 + x, - 2 + x]]
+                                                              Type: List(Any)
+x19:FDA :=(z+1)*(z+2)*(x-2);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x19)
+ 
+
+   (109)
+                                   2            2
+   ["passed", - 4 - 6 z + 2 x - 2 z  + 3 z x + z x, [1 + z, 2 + z, - 2 + x]]
+                                                              Type: List(Any)
+x20:FDA :=z*(x*x-2);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x20)
+ 
+
+                                2             2
+   (111)  ["passed", - 2 z + z x , [z, - 2 + x ]]
+                                                              Type: List(Any)
+x21:FDA :=x*x*x-10*x*x+31*x-30;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x21)
+ 
+
+   (113)
+                                2    3               2    1
+   ["passed", - 30 + 31 x - 10 x  + x , [- 5 + x, - -- + -- x, - 93 + 31 x]]
+                                                    31   31
+                                                              Type: List(Any)
+x22:FDA :=(x-2)*(x-3)*(x-5);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x22)
+ 
+
+                                       2    3
+   (115)  ["passed", - 30 + 31 x - 10 x  + x , [- 2 + x, - 3 + x, - 5 + x]]
+                                                              Type: List(Any)
+x23:FDA :=4*x*x*y-4*x*x-9*y+9;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x23)
+ 
+
+                                  2      2             1   1
+   (117)  ["passed", 9 - 9 y - 4 x  + 4 x y, [6 + 4 x, - - - x, 9 - 9 y]]
+                                                       6   9
+                                                              Type: List(Any)
+x24:FDA :=(y-z*x)^2;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x24)
+ 
+
+                      2
+   (119)  ["passed", y  - z x y - y z x + z x z x, [y - z x, y - z x]]
+                                                              Type: List(Any)
+x25:FDA :=(1-x*y)*(1-y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x25)
+ 
+
+                                        2
+   (121)  ["passed", 1 - y x - x y + x y x, [1 - x y, 1 - y x]]
+                                                              Type: List(Any)
+x26:FDA :=1-x*y-1*y*x+x*y^2*x; 
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x26)
+ 
+
+                                        2
+   (123)  ["passed", 1 - y x - x y + x y x, [- 1 + x y, - 1 + y x]]
+                                                              Type: List(Any)
+x27:FDA :=(x*y)*(1-x*y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x27)
+ 
+
+   (125)  ["passed", x y - x y x y, [x, y, 1 - x y]]
+                                                              Type: List(Any)
+x28:FDA :=(x+1)*(x+2)*(x-2)*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x28)
+ 
+
+                                2    3    4
+   (127)  ["passed", - 4 x - 4 x  + x  + x , [1 + x, 2 + x, - 2 + x, x]]
+                                                              Type: List(Any)
+x29:FDA :=x*(1-y*x)*(3+y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x29)
+ 
+
+   (129)  ["passed", 3 x - 2 x y x - x y x y x, [x, 1 - y x, 3 + y x]]
+                                                              Type: List(Any)
+x30:FDA :=3*x-2*x*y*x-x*y*x*y*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x30)
+ 
+
+   (131)  ["passed", 3 x - 2 x y x - x y x y x, [x, 3 + y x, 1 - y x]]
+                                                              Type: List(Any)
+x31:FDA :=x*(1-y*x)*(3-y*x);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x31)
+ 
+
+   (133)  ["passed", 3 x - 4 x y x + x y x y x, [x, 1 - y x, 3 - y x]]
+                                                              Type: List(Any)
+x32:FDA :=3*x-4*x*y*x+x*y*x*y*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x32)
+ 
+
+   (135)  ["passed", 3 x - 4 x y x + x y x y x, [x, - 1 + y x, - 3 + y x]]
+                                                              Type: List(Any)
+x33:FDA :=(1-x*y)*(3-x*y)*(3+x*y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x33)
+ 
+
+   (137)
+   ["passed", 9 - 9 x y - x y x y + x y x y x y, [1 - x y, 3 - x y, 3 + x y]]
+                                                              Type: List(Any)
+x34:FDA :=9-9*x*y-x*y*x*y+x*y*x*y*x*y;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x33)
+ 
+
+   (139)
+   ["passed", 9 - 9 x y - x y x y + x y x y x y, [1 - x y, 3 - x y, 3 + x y]]
+                                                              Type: List(Any)
+x35:FDA :=(1-x*y)*(2+y*x)*(3-y*z)*z;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x35)
+ 
+
+   (141)
+   ["passed",
+
+                  2                              2        2 2        2
+       6 z - 2 y z  + 3 y x z - 6 x y z - y x y z  + 2 x y z  - 3 x y x z
+     + 
+          2     2
+       x y x y z
+     ,
+    [1 - x y, 2 + y x, 3 - y z, z]]
+                                                              Type: List(Any)
+x36:FDA :=(1-x*y)*(2+y*x)*(3-y*z)*(2-z*y);
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x36)
+ 
+
+   (143)
+   ["passed",
+
+                                                  2
+       12 - 6 z y - 4 y z + 6 y x - 12 x y + 2 y z y - 3 y x z y - 2 y x y z
+     + 
+                        2         2           2         2 2         2
+       6 x y z y + 4 x y z - 6 x y x + y x y z y - 2 x y z y + 3 x y x z y
+     + 
+            2           2     2
+       2 x y x y z - x y x y z y
+     ,
+    [1 - x y, 2 + y x, 3 - y z, 2 - z y]]
+                                                              Type: List(Any)
+x37:FDA  :=(1-x*y)*(2+y*x)*(3-y*z)*(2-z*y)*x;
+ 
+
+Type: FreeDivisionAlgebra(OrderedVariableList([x,y,z]),Fraction(MultivariatePolynomial([a,b,c,d,e],Integer)))
+factorCheck_poly(x37)
+ 
+
+   (145)
+   ["passed",
+
+                                       2                   2
+       12 x - 6 z y x - 4 y z x + 6 y x  - 12 x y x + 2 y z y x - 3 y x z y x
+     + 
+                                          2           2 2          2
+       - 2 y x y z x + 6 x y z y x + 4 x y z x - 6 x y x  + y x y z y x
+     + 
+              2 2           2               2             2     2
+       - 2 x y z y x + 3 x y x z y x + 2 x y x y z x - x y x y z y x
+     ,
+    [1 - x y, 2 + y x, 3 - y z, 2 - z y, x]]
+                                                              Type: List(Any)
+
+statistics()
+ 
+   =============================================================================
+   General WARNINGS:
+   * do not use ')clear completely' before having used 'statistics()'
+     It clears the statistics without warning!
+   * do not forget to pass the arguments of the testXxxx functions as Strings!
+     Otherwise, the test will fail and statistics() will not notice!
+   * testLibraryError does not prevent FriCAS from aborting the current block.
+     Thus, if a block contains other test functions, they will not be executed
+     and statistics() will not notice!
+
+   =============================================================================
+   Testsuite: testsuite_trial
+     failed (total): 0 (2)
+   =============================================================================
+   Testsuite: NonC testing
+     failed (total): 0 (1)
+   =============================================================================
+   Testsuite: Parameter tests
+     failed (total): 0 (1)
+   =============================================================================
+   Testsuite: Misc
+     failed (total): 0 (1)
+
+   =============================================================================
+   testsuite | testcases: failed (total) | tests: failed (total)
+   testsuite_trial             0     (2)               0     (7)
+   NonC testing                0     (1)               0     (8)
+   Parameter tests             0     (1)               0    (12)
+   Misc                        0     (1)               0    (32)
+   =============================================================================
+   File summary.
+   unexpected failures: 0
+   expected failures: 5
+   unexpected passes: 0
+   total tests: 59
+                                                                   Type: Void
+)spool
+ 
